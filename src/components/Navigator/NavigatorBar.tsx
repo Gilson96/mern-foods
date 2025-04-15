@@ -9,13 +9,12 @@ import { Avatar } from "@chakra-ui/react";
 type NavigatorBarProps = {
   setActiveCategory: React.Dispatch<React.SetStateAction<string>>;
   login: string;
+  postcode: string
 };
 
-const NavigatorBar = ({ setActiveCategory, login }: NavigatorBarProps) => {
+const NavigatorBar = ({ setActiveCategory, login, postcode }: NavigatorBarProps) => {
   // foods that are in the basket
   const foodsInTheBasket = useSelector((state: RootState) => state.cart.cart);
-
-  console.log(login)
 
   return (
     <>
@@ -25,6 +24,7 @@ const NavigatorBar = ({ setActiveCategory, login }: NavigatorBarProps) => {
           <Link
             to="/home"
             className="flex items-center"
+            state={{postcode: postcode, login: login}}
             onClick={() => setActiveCategory("")}
           >
             <p className="text-lg font-semibold tablet:text-xl">Mern-</p>
@@ -34,7 +34,7 @@ const NavigatorBar = ({ setActiveCategory, login }: NavigatorBarProps) => {
           </Link>
         </div>
 
-        <div className="max-small-laptop:hidden w-[70%]">
+        <div className="max-tablet:hidden w-[50%]">
           <NavigationSearch />
         </div>   
 
@@ -58,7 +58,7 @@ const NavigatorBar = ({ setActiveCategory, login }: NavigatorBarProps) => {
               <Avatar size={'sm'}/>
               </Link>
               <Link to={'/signup'} >
-                <p className="h-[2rem] w-full bg-black text-white flex justify-center items-center p-4 rounded-full text-sm">Sign Up</p>
+                <p className="h-[2rem] w-full bg-black text-white flex justify-center items-center p-4 rounded-full text-sm font-semibold">Sign Up</p>
               </Link>
             </div>
           : ''}

@@ -38,7 +38,7 @@ export default function NavigationSearch() {
   return (
     <>
       <div
-        className="h-[3rem] w-full flex items-center p-[3%] gap-3 rounded-3xl bg-neutral-200"
+        className="h-[3rem] w-full flex items-center p-[3%] gap-3 rounded-3xl bg-neutral-200 tablet:h-[2.5rem]"
         onClick={onOpen}
       >
         <MagnifyingGlassIcon className="h-5 w-5 ml-2" />

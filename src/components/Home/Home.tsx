@@ -5,7 +5,6 @@ import Categories from "./Categories";
 import FeaturedRestaurant from "./FeaturedRestaurant";
 import RestaurantList from "./RestaurantList";
 import NavigatorBar from "../Navigator/NavigatorBar";
-import Advertising from "./Advertising";
 import { useLocation } from "react-router-dom";
 import { Spinner } from "@chakra-ui/react";
 
@@ -20,8 +19,7 @@ const Home = () => {
   // state coming from <Link/>
   const { state }: HomeProps = useLocation();
 
-
-  if (!restaurants) return  <Spinner/>;
+  if (!restaurants) return <Spinner />;
   if (isLoading) return <p>...</p>;
 
   // push objects coming from backend
@@ -52,31 +50,36 @@ const Home = () => {
   return (
     <main className="h-full w-full flex flex-col p-[3%]">
       {/* Navigator */}
-      <NavigatorBar setActiveCategory={setActiveCategory} login={state.login} />
-      <div className="w-full h-full flex justify-end items-center pb-[2%] pl-[3%]">
-        <p className="h-[2rem] bg-neutral-300 text-black flex justify-center items-center p-4 rounded-full gap-2 text-sm">Deliver to <span className="text-base font-medium">{state.postcode}</span></p>
+      <NavigatorBar
+        setActiveCategory={setActiveCategory}
+        login={state.login}
+        postcode={state.postcode}
+      />
+      <div className="w-full h-full flex justify-end items-center pb-[2%] pl-[3%] tablet:hidden">
+        <p className="h-[2rem] bg-neutral-300 text-black flex justify-center items-center p-4 rounded-full gap-2 text-sm">
+          Deliver to{" "}
+          <span className="text-base font-medium">{state.postcode}</span>
+        </p>
       </div>
-      <div className="large-phone:px-[8%] tablet:px-[5%] small-laptop:hidden">
+      <div className="tablet:hidden">
         <NavigationSearch />
       </div>
 
       {/* categories list */}
-      <section className={`${activeCategory && "hidden"}`}>
-        <Categories setActiveCategory={setActiveCategory} />
-        <hr className="w-[100%] relative right-1" />
+      <section className={`${activeCategory && "hidden"} w-full`}>
+        <div className="flex items-center justify-between">
+          <Categories setActiveCategory={setActiveCategory} />
+          <p className="h-[4rem] bg-white text-black flex flex-col justify-center items-center p-4 rounded-xl gap-2 text-sm tablet:w-[20%] max-tablet:hidden small-laptop:relative small-laptop:top-[1rem] small-laptop:h-[5rem] max-medium-laptop:hidden"></p>
+            <p className="h-[4rem] bg-neutral-300 text-black flex flex-col justify-center items-center p-4 rounded-xl gap-2 text-sm tablet:w-[20%] max-tablet:hidden small-laptop:relative small-laptop:top-[1rem] small-laptop:h-[5rem]">
+              <span>Deliver to</span>
+              <span className="text-base font-medium">{state.postcode}</span>
+            </p>
+        </div>
+        <hr className="w-[96%] relative left-[2rem]" />
       </section>
 
-      {/* Advertisement */}
-      <div
-        className={`max-small-laptop:hidden ${
-          activeCategory && "hidden"
-        } py-[2%] px-[3%]`}
-      >
-        <Advertising />
-      </div>
-
       {activeCategory === "" ? (
-        <div className="small-laptop:px-[3%]">
+        <div className="small-laptop:pl-[3%]">
           {/* Highest rated Restaurant list */}
           <FeaturedRestaurant
             title="Highest rated"
@@ -100,7 +103,7 @@ const Home = () => {
         </div>
       ) : (
         // Restaurants selected via categories
-        <div className="mt-[5%] px-[3%] large-phone:px-[10%] tablet:px-[6%] small-laptop:px-[4.5%]">
+        <div className="mt-[5%] px-[3%] large-phone:px-[1%] tablet:px-[6%] small-laptop:p-0 small-laptop:pl-[4%] medium-laptop:p-0 medium-laptop:pl-[3%]">
           <p className="font-bold text-xl">
             {restaurantByCategory.length} results
           </p>
@@ -124,6 +127,7 @@ const Home = () => {
                 restaurant=""
                 ratings_and_reviews={undefined}
                 date={undefined}
+                body={undefined}
               />
             ))}
           </div>

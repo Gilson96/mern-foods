@@ -35,7 +35,7 @@ const NavigatorMenu = ({ login }: NavigatorMenuProps) => {
 
   return (
     <>
-      <div onClick={onOpen}>
+      <div onClick={onOpen} className="cursor-pointer">
         <Bars3Icon className="h-7 w-7" />
       </div>
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
@@ -57,14 +57,14 @@ const NavigatorMenu = ({ login }: NavigatorMenuProps) => {
                 </div>
                 <XCircleIcon
                   onClick={onClose}
-                  className="h-7 w-7 place-self-center"
+                  className="h-7 w-7 place-self-center cursor-pointer"
                 />
               </>
             ) : (
               <div className="flex flex-col w-full gap-2">
                 <XCircleIcon
                   onClick={onClose}
-                  className="h-7 w-7 place-self-end"
+                  className="h-7 w-7 place-self-end cursor-pointer"
                 />
                 <Link to="/signup">
                   <div className="h-[3rem] w-full bg-black text-white flex justify-center items-center rounded-lg">

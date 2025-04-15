@@ -59,6 +59,9 @@ const FeaturedRestaurant = ({
                 price=""
                 quantity={0}
                 restaurant=""
+                ratings_and_reviews={undefined}
+                date={undefined}
+                body={undefined}
               />
             </SwiperSlide>
           ))}

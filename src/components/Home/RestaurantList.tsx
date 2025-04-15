@@ -2,6 +2,7 @@ import { HeartIcon } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { Meal } from "../../features/Recipe";
 import { Link } from "react-router-dom";
+import useScreenSize from "../../features/useScreenSize";
 
 const RestaurantList = ({
   name,
@@ -12,6 +13,10 @@ const RestaurantList = ({
   isCategoryActive,
   _id,
 }: Meal) => {
+  const screenSize = useScreenSize()
+
+  const largePhone = screenSize.width >= 425 && screenSize.width < 768
+
   return (
     <Link
       to={`restaurant/${_id}`}
@@ -27,7 +32,7 @@ const RestaurantList = ({
       >
         <img
           style={{
-            height: isCategoryActive ? 10 + "rem" : 8 + "rem",
+            height: isCategoryActive ? largePhone ? 13 + "rem" : 10 + 'rem' : screenSize.width < 1024 ?  8 + "rem" : 10 + 'rem',
             width: 100 + "%",
           }}
           src={poster_image}
@@ -39,8 +44,8 @@ const RestaurantList = ({
       {/* Restaurant details */}
       {/* Name */}
       <div
-        className={`flex items-center justify-between w-full px-[1%] small-laptop:px-[2%] large-phone:pt-[2px] tablet:pt-[10%] ${
-          isCategoryActive && "mt-[2%] small-laptop:mt-[12%] large-laptop:mt-[10%]"
+        className={`flex items-center justify-between w-full px-[1%] small-laptop:px-[2%] large-phone:pt-[2px] tablet:pt-[10%] small-laptop:pt-[15%] medium-laptop:pt-[13%] ${
+          isCategoryActive && "mt-[2%] large-phone:mt-[12%] medium-laptop:mt-0"
         }`}
       >
         <p className="font-semibold truncate">{name}</p>
@@ -56,7 +61,7 @@ const RestaurantList = ({
 
       {/* rating && arrival */}
       <div
-        className={`flex gap-1 ${
+        className={`flex gap-1 medium-laptop:pl-[2%] ${
           isCategoryActive && "mb-[5%] items-center small-laptop:px-[2%]"
         } px-[1%] `}
       >
