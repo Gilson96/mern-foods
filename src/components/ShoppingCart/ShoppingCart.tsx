@@ -18,6 +18,8 @@ type ShoppingCartProps = {
   checkoutTitle: string | undefined;
   screenSize?: string
   children?: ReactNode
+  postcode: string
+  login: string
 };
 
 const ShoppingCart = ({
@@ -25,7 +27,9 @@ const ShoppingCart = ({
   checkoutTitle,
   checkoutIconStyles,
   screenSize,
-  children
+  children,
+  login,
+  postcode
 }: ShoppingCartProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -46,11 +50,11 @@ const ShoppingCart = ({
         <DrawerContent className="bg-black rounded-t-2xl">
           <DrawerHeader className="flex justify-between items-center">
             <div></div>
-            <p>Cart</p>
+            <p className="small-laptop:pl-[10%]">Cart</p>
             <XCircleIcon className="h-8 w-8 cursor-pointer" onClick={onClose} />
           </DrawerHeader>
           <DrawerBody className="">
-            <ShoppingCartRestaurant screenSize={screenSize} />
+            <ShoppingCartRestaurant screenSize={screenSize} login={login} postcode={postcode} />
           </DrawerBody>
         </DrawerContent>
       </Drawer>

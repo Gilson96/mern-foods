@@ -16,41 +16,55 @@ import {
   Avatar,
   Divider,
 } from "@chakra-ui/react";
-import { XCircleIcon } from "@heroicons/react/24/outline";
-import { useSelector } from "react-redux";
+import {
+  MinusCircleIcon,
+  PlusCircleIcon,
+  XCircleIcon,
+} from "@heroicons/react/24/outline";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { Meal } from "../../features/Recipe";
 import useScreenSize from "../../features/useScreenSize";
 import CheckoutLargeScreen from "./CheckoutLargeScreen";
+import { removeFromCart, addToCart } from "../../features/cartSlice";
 
 type CheckoutProps = {
   findRestaurants: Meal[];
   subtotal: number;
+  foodsActualQuantity: (food_id: string) => number | undefined;
+  login:string
+  postcode: string
 };
 
-const Checkout = ({ findRestaurants, subtotal }: CheckoutProps) => {
+const Checkout = ({
+  findRestaurants,
+  subtotal,
+  foodsActualQuantity,
+  login,
+  postcode
+}: CheckoutProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const screenSize = useScreenSize();
+  const dispatch = useDispatch()
 
   // foods in the store
   const foodsInTheBasket = useSelector((state: RootState) => state.cart.cart);
 
   // subtotal price
-  const subTotal = () =>
-    foodsInTheBasket.reduce(
+  const subTotal = foodsInTheBasket.reduce(
       (total: number, item: Meal) =>
-        (total += Number.parseFloat(item!.price) * item!.quantity),
+        (total += Number.parseFloat(item.price) * item!.quantity),
       0
     );
 
   // total price with delivery fee
-  const totalPrice = subTotal() + 2.5;
+  const totalPrice = subTotal + 2.5;
 
   return (
     <>
       <div
         onClick={onOpen}
-        className="h-[3rem] w-full bg-black text-white flex justify-center items-center rounded-lg place-self-center gap-2 cursor-pointer"
+        className="h-[3rem] w-full bg-black text-white flex justify-center items-center rounded-lg place-self-center gap-2 cursor-pointer small-laptop:ml-[15%] medium-laptop:ml-[25%]"
       >
         <p> Go To Checkout</p>
         <p className="font-bold"> £{subtotal.toFixed(2)} </p>
@@ -60,12 +74,13 @@ const Checkout = ({ findRestaurants, subtotal }: CheckoutProps) => {
         <Modal size={"full"} isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader className="h-full w-full flex gap-[18%] items-center">
+            <ModalHeader className="h-full w-full flex justify-between items-center">
               <XCircleIcon
-                className="h-8 w-8 relative right-[6%]"
+                className="h-8 w-8 "
                 onClick={onClose}
               />
               <h1>Checkout</h1>
+              <div></div>
             </ModalHeader>
             <ModalBody>
               {findRestaurants?.map((restaurant) => {
@@ -73,7 +88,6 @@ const Checkout = ({ findRestaurants, subtotal }: CheckoutProps) => {
                 const selectedFoods = foodsInTheBasket.filter(
                   (food) => food.restaurant === restaurant._id
                 );
-                console.log(selectedFoods);
 
                 return (
                   <Accordion allowToggle>
@@ -94,7 +108,7 @@ const Checkout = ({ findRestaurants, subtotal }: CheckoutProps) => {
                       <AccordionPanel pb={4}>
                         <div className="w-full">
                           {selectedFoods.map((food, index) => (
-                            <div key={index} className="w-full h-full py-[2%]">
+                            <div key={index} className="w-full h-full py-[2%] medium-phone:px-[3%]">
                               <hr className="h-full w-[120%] relative -top-[4px] right-[7%]" />
                               <div className="flex items-center gap-2 justify-between w-full my-[3%]">
                                 <Avatar
@@ -103,22 +117,51 @@ const Checkout = ({ findRestaurants, subtotal }: CheckoutProps) => {
                                   right={"3%"}
                                 ></Avatar>
 
-                                <div className="flex pl-[3%] w-full justify-between items-end">
+                                <div className="flex pl-[3%] w-full justify-between items-center">
                                   <div>
-                                    <p className="text-sm text-neutral-500">
-                                      {"£" +
-                                        Number.parseFloat(food.price).toFixed(
-                                          2
-                                        )}
-                                    </p>
-                                    <p className="text-sm truncate font-semibold  w-[50%]">
+                                    <p className="text-sm font-semibold w-[100%]">
                                       {food.name}
+                                    </p>
+                                    <p className="text-sm text-neutral-500">
+                                      {"£" + Number(Number.parseFloat(food.price)*foodsActualQuantity(food._id)!).toFixed(2) }
                                     </p>
                                   </div>
                                   <div className="flex gap-1">
-                                    <p className="text-sm text-neutral-500">
-                                      x {food.quantity}
-                                    </p>
+                                    <div className="h-[5rem] flex items-center gap-2 justify-center">
+                                      <p
+                                        className={`${
+                                          foodsActualQuantity(
+                                            restaurant._id
+                                          ) === 0
+                                            ? "cursor-auto"
+                                            : "cursor-pointer"
+                                        }`}
+                                      >
+                                        <MinusCircleIcon
+                                          className={`h-5 w-5  ${
+                                            foodsActualQuantity(
+                                              restaurant._id
+                                            ) === 0
+                                              ? "text-neutral-400"
+                                              : "text-black"
+                                          }`}
+                                          onClick={() =>
+                                            dispatch(removeFromCart(food))
+                                          }
+                                        />
+                                      </p>
+                                      <p className="text-sm font-semibold">
+                                        {foodsActualQuantity(food._id)}
+                                      </p>
+                                      <p className="cursor-pointer">
+                                        <PlusCircleIcon
+                                          className="h-5 w-5"
+                                          onClick={() =>
+                                            dispatch(addToCart(food))
+                                          }
+                                        />
+                                      </p>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -148,7 +191,7 @@ const Checkout = ({ findRestaurants, subtotal }: CheckoutProps) => {
                 />
                 <div className="flex justify-between items-center py-[2%] text-neutral-500 text-lg">
                   <p className="">Subtotal</p>
-                  <p>{"£" + subTotal().toFixed(2)}</p>
+                  <p>{"£" + subTotal.toFixed(2)}</p>
                 </div>
                 <div className="flex justify-between items-center py-[2%] text-neutral-500 text-lg">
                   <p>Delivery Fee</p>
@@ -169,7 +212,14 @@ const Checkout = ({ findRestaurants, subtotal }: CheckoutProps) => {
           </ModalContent>
         </Modal>
       ) : (
-        <CheckoutLargeScreen findRestaurants={findRestaurants} isOpen={isOpen} onClose={onClose} />
+        <CheckoutLargeScreen
+          findRestaurants={findRestaurants}
+          isOpen={isOpen}
+          onClose={onClose}
+          foodsActualQuantity={foodsActualQuantity}
+          postcode={postcode}
+          login={login}
+        />
       )}
     </>
   );

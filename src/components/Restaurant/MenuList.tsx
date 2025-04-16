@@ -2,7 +2,7 @@ import { Meal } from "../../features/Recipe";
 import useScreenSize from "../../features/useScreenSize";
 import Food from "./Food";
 import { useDisclosure } from "@chakra-ui/react";
-import { Card, CardBody, Image, Stack, Heading, Text } from "@chakra-ui/react";
+import { Card, CardBody, Stack, Heading, Text, Image } from "@chakra-ui/react";
 
 type MenuList = {
   name: string;
@@ -34,14 +34,14 @@ export const MenuList = ({
           className="h-[10rem] w-full flex justify-between items-center"
         >
           <div>
-            <p className="font-semibold">{name}</p>
+            <p className="font-semibold text-lg">{name}</p>
             <p>£{price}</p>
           </div>
 
           <img
             style={{
-              height: 6 + "rem",
-              width: 8 + "rem",
+              height: screenSize.width >= 768 ? 8 + "rem" : 6 + 'rem',
+              width: screenSize.width >= 768 ? 12 + "rem" : 8 + 'rem',
             }}
             src={poster_image}
             className="rounded"
@@ -60,7 +60,7 @@ export const MenuList = ({
           />
         </section>
       ) : (
-        <section className="px-[6%] mt-[2%]">
+        <section className="px-[6%] mt-[2%] pb-[3%]">
           <Card
             direction={{ base: "column", sm: "row" }}
             overflow="hidden"
@@ -84,7 +84,6 @@ export const MenuList = ({
                 </div>
               </CardBody>
             </Stack>
-
             <Image
               objectFit="cover"
               maxW={{ base: "100%", sm: "200px" }}

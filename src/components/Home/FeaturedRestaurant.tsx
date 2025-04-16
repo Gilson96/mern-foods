@@ -8,12 +8,16 @@ type FeaturedRestaurantListProps = {
   title: string;
   subTitle: string;
   featuredRestaurant: Meal[];
+  postcode: string
+  login: string
 };
 
 const FeaturedRestaurant = ({
   title,
   subTitle,
   featuredRestaurant,
+  postcode,
+  login
 }: FeaturedRestaurantListProps) => {
   const screenSize = useScreenSize();
 
@@ -50,18 +54,9 @@ const FeaturedRestaurant = ({
                 arrival={restaurant.arrival}
                 rating={restaurant.rating}
                 _id={restaurant._id}
-                logo_image={restaurant.logo_image}
-                category=""
                 isCategoryActive={false}
-                address=""
-                foods={[]}
-                description=""
-                price=""
-                quantity={0}
-                restaurant=""
-                ratings_and_reviews={undefined}
-                date={undefined}
-                body={undefined}
+                postcode={postcode}
+                login={login}
               />
             </SwiperSlide>
           ))}

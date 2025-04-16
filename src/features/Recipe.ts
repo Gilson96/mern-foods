@@ -13,7 +13,7 @@ export interface Meal {
   isCategoryActive: boolean;
   foods: [];
   description: string;
-  price: string | undefined;
+  price: string;
   quantity: number;
   ratings_and_reviews: [] | undefined;
   restaurant: string;

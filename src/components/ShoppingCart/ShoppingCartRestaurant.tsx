@@ -6,7 +6,6 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
-  Box,
 } from "@chakra-ui/react";
 import { Avatar } from "@chakra-ui/react";
 import { ChevronRightIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
@@ -21,10 +20,14 @@ import { MinusCircleIcon } from "@heroicons/react/24/outline";
 
 type ShoppingCartRestaurantProps = {
   screenSize?: string;
+  postcode: string
+  login: string
 };
 
 const ShoppingCartRestaurant = ({
   screenSize,
+  login,
+  postcode
 }: ShoppingCartRestaurantProps) => {
   const [selectedFood, setSelectedFood] = useState<Meal[]>();
   const dispatch = useDispatch();
@@ -46,7 +49,7 @@ const ShoppingCartRestaurant = ({
     foodsInTheBasket?.reduce(
       (total: number, item: Meal | undefined) =>
         (total +=
-          Number.parseFloat(item?.price) * foodsActualQuantity(item?._id)!),
+          Number.parseFloat(item!.price) * foodsActualQuantity(item!._id)!),
       0
     );
 
@@ -61,7 +64,7 @@ const ShoppingCartRestaurant = ({
       // if true, push first restaurant found
       if (restaurant.length <= 0) {
         restaurant.push({
-          ...restaurants?.find((res) => res._id === restaurants_id),
+          ...restaurants!.find((res) => res._id === restaurants_id)!,
           quantity: 0,
         });
       }
@@ -71,7 +74,7 @@ const ShoppingCartRestaurant = ({
       // if true, increment quantity
       if (!restaurant.some((res) => res._id === restaurants_id)) {
         restaurant.push({
-          ...restaurants?.find((res) => res._id === restaurants_id),
+          ...restaurants!.find((res) => res._id === restaurants_id)!,
           quantity: 1,
         });
       } else {
@@ -128,23 +131,24 @@ const ShoppingCartRestaurant = ({
                       width={"112%"}
                       position={"relative"}
                       right={"1.5rem"}
+                      overflowX={'hidden'}
                     >
                       <h2>
-                        <AccordionButton _expanded={{ bg: "white" }}>
+                        <AccordionButton _expanded={{ bg: "white" }}> 
+                          <div className='flex justify-between items-center w-full'>
                           <Avatar src={foods.logo_image} size={"lg"} />
-                          <Box as="span" flex="1" textAlign="center">
                             <p className="font-semibold"> {foods.name} </p>
-                          </Box>
                           <AccordionIcon />
+                          </div>
                         </AccordionButton>
                       </h2>
                       <AccordionPanel>
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-2 overflow-x-hidden">
                           {selectedFoods.map((food: Meal) => (
-                            <div className="flex items-center justify-between px-[1%]">
+                            <div className="flex items-center justify-between px-[1%] overflow-x-hidden">
                               <Avatar src={food.poster_image} size={"lg"} />
-                              <div className="flex flex-col px-[2%]">
-                                <p className="font-semibold w-[100%]">
+                              <div className="flex flex-col items-start justify-start w-full pl-[5%]">
+                                <p className="font-semibold">
                                   {food.name}
                                 </p>
                                 <p className="text-neutral-500 font-semibold">
@@ -168,7 +172,7 @@ const ShoppingCartRestaurant = ({
                                 <p className="text-neutral-500 font-semibold pr-[6%]">
                                   £
                                   {Number(
-                                    foodsActualQuantity(food._id) *
+                                    foodsActualQuantity(food._id)! *
                                       Number(food.price)
                                   ).toFixed(2)}
                                 </p>
@@ -184,11 +188,12 @@ const ShoppingCartRestaurant = ({
             </>
           );
         })}
-        <hr className="relative w-[120%] h-[1rem] right-6 pt-[5%]" />
+        <hr className="relative w-[120%] h-[1rem] right-6 pt-[15%]" />
       </div>
 
-      <div className='fixed bottom-2 w-[30%]'>
-        <Checkout findRestaurants={findRestaurant()} subtotal={foodsTotalPrice()} />
+      <div className='fixed bottom-2 w-[90%] pr-2 medium-phone:w-[86%] tablet:w-[53%] small-laptop:w-[35%] medium-laptop:w-[25%] medium-laptop:bottom-5'>
+        <Checkout findRestaurants={findRestaurant()} subtotal={foodsTotalPrice()} foodsActualQuantity={foodsActualQuantity} postcode={postcode} login={login}/>
+        
       </div>
 
       <ShoppingCartRestaurantModal
@@ -197,6 +202,9 @@ const ShoppingCartRestaurant = ({
         selectedFood={selectedFood}
         restaurants={restaurants}
         findRestaurants={findRestaurant}
+        postcode={postcode}
+        login={login}
+        subtotal={foodsTotalPrice()}
       />
     </>
   );

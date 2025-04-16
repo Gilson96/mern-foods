@@ -8,9 +8,11 @@ import useScreenSize from "../../features/useScreenSize";
 
 type MenuProps = {
   _id: string | undefined;
+  postcode: string
+  login: string
 };
 
-const Menu = ({ _id }: MenuProps) => {
+const Menu = ({ _id, postcode, login }: MenuProps) => {
   const { data: restaurantFoods, isLoading } = useGetRestaurantFoodsQuery(_id!);
 
   const foodsInTheBasket = useSelector((state: RootState) => state.cart.cart);
@@ -21,15 +23,15 @@ const Menu = ({ _id }: MenuProps) => {
   if (isLoading) return <p>...</p>;
 
   return (
-    <section className="h-full w-full">
+    <section className="h-full w-full small-laptop:pl-[4%]">
       <p className="text-xl font-bold pt-[5%] small-phone:px-[3%]">Menu</p>
 
-      <div className="small-laptop:grid small-laptop:grid-cols-2">
+      <div className="max-small-laptop:p-[3%] small-laptop:grid small-laptop:grid-cols-2">
         {restaurantFoods.foods.map((food: Meal) => (
           <>
             <MenuList
               name={food.name}
-              price={parseFloat(food.price).toFixed(2)}
+              price={parseFloat(food.price!).toFixed(2)}
               poster_image={food.poster_image}
               description={food.description}
               food={food}
@@ -56,6 +58,8 @@ const Menu = ({ _id }: MenuProps) => {
                 checkoutTitle="Checkout"
                 checkoutIconStyles="h-[1.5rem] w-[1.5rem]"
                 screenSize={screenSize.width < 768? 'small' : 'large'}
+                postcode={postcode}
+                login={login}
               />
             </div>
           </div>

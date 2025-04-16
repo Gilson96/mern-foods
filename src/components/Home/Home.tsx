@@ -62,29 +62,33 @@ const Home = () => {
         </p>
       </div>
       <div className="tablet:hidden">
-        <NavigationSearch />
+        <NavigationSearch setActiveCategory={setActiveCategory} postcode={state.postcode} login={state.login} />
       </div>
 
       {/* categories list */}
-      <section className={`${activeCategory && "hidden"} w-full`}>
+      <section
+        className={`${activeCategory && "hidden"} w-full small-laptop:hidden`}
+      >
         <div className="flex items-center justify-between">
           <Categories setActiveCategory={setActiveCategory} />
-          <p className="h-[4rem] bg-white text-black flex flex-col justify-center items-center p-4 rounded-xl gap-2 text-sm tablet:w-[20%] max-tablet:hidden small-laptop:relative small-laptop:top-[1rem] small-laptop:h-[5rem] max-medium-laptop:hidden"></p>
-            <p className="h-[4rem] bg-neutral-300 text-black flex flex-col justify-center items-center p-4 rounded-xl gap-2 text-sm tablet:w-[20%] max-tablet:hidden small-laptop:relative small-laptop:top-[1rem] small-laptop:h-[5rem]">
-              <span>Deliver to</span>
-              <span className="text-base font-medium">{state.postcode}</span>
-            </p>
+          <p className="h-[4rem] bg-white text-black flex flex-col justify-center items-center p-4 rounded-xl gap-2 text-sm tablet:w-[20%] max-tablet:hidden "></p>
+          <p className="h-[4rem] bg-neutral-300 text-black flex flex-col justify-center items-center p-4 rounded-xl gap-2 text-sm tablet:w-[20%] max-tablet:hidden">
+            <span>Deliver to</span>
+            <span className="text-base font-medium">{state.postcode}</span>
+          </p>
         </div>
         <hr className="w-[96%] relative left-[2rem]" />
       </section>
 
       {activeCategory === "" ? (
-        <div className="small-laptop:pl-[3%]">
-          {/* Highest rated Restaurant list */}
+        <div className="small-laptop:pt-[3%] small-laptop:pl-[3.5%]">
+          {/* Highest rated Restaurant */}
           <FeaturedRestaurant
             title="Highest rated"
             subTitle="Top Rated and quality restaurant"
             featuredRestaurant={highestRatedRestaurant}
+            postcode={state.postcode}
+            login={state.login}
           />
           <hr className="w-full" />
           {/* Lowest delivery fee Restaurant list */}
@@ -92,6 +96,8 @@ const Home = () => {
             title="Low Cost Fee"
             subTitle="Restaurants with the lowest delivery fee"
             featuredRestaurant={lowCostFeeRestaurant}
+            postcode={state.postcode}
+            login={state.login}
           />
           <hr className="w-full" />
           {/* Lowest arrival time Restaurant list */}
@@ -99,6 +105,8 @@ const Home = () => {
             title="In a Rush?"
             subTitle="Restaurant with the quickest arrival time"
             featuredRestaurant={fastestRestaurant}
+            postcode={state.postcode}
+            login={state.login}
           />
         </div>
       ) : (
@@ -115,19 +123,10 @@ const Home = () => {
                 arrival={restaurant.arrival}
                 rating={restaurant.rating}
                 poster_image={restaurant.poster_image}
-                category={undefined}
                 isCategoryActive={true}
                 _id={restaurant._id}
-                logo_image={restaurant.logo_image}
-                address={undefined}
-                foods={[]}
-                description=""
-                price=""
-                quantity={0}
-                restaurant=""
-                ratings_and_reviews={undefined}
-                date={undefined}
-                body={undefined}
+                postcode={state.postcode}
+                login={state.login}
               />
             ))}
           </div>

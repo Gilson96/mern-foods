@@ -25,8 +25,7 @@ export const Categories = ({ setActiveCategory }: CategoryListProps) => {
           (screenSize.width >= 375 && screenSize.width < 425 ? 4.4 : 0) ||
           // large-phone
           (screenSize.width >= 425 && screenSize.width < 768 ? 4.6 : 0) ||
-          (screenSize.width >= 768 && screenSize.width < 1024 ? 5: 0) ||
-          (screenSize.width >= 1024 ? 4.9 : 0)
+          (screenSize.width >= 768 && screenSize.width < 1024 ? 4.9: 0)
         }
       >
         {categories.map((category: Meal) => {

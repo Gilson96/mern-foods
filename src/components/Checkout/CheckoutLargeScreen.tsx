@@ -30,15 +30,32 @@ type CheckoutLargeScreenProps = {
   findRestaurants: Meal[];
   isOpen: boolean;
   onClose: () => void;
+  foodsActualQuantity: (food_id: string) => number | undefined;
+  login: string;
+  postcode: string;
 };
 
 const CheckoutLargeScreen = ({
   findRestaurants,
   isOpen,
   onClose,
+  foodsActualQuantity,
+  login,
+  postcode,
 }: CheckoutLargeScreenProps) => {
+  const dispatch = useDispatch();
   // foods in the store
   const foodsInTheBasket = useSelector((state: RootState) => state.cart.cart);
+  // subtotal price
+  const subTotal = foodsInTheBasket.reduce(
+    (total: number, item: Meal) =>
+      (total += Number.parseFloat(item.price) * item!.quantity),
+    0
+  );
+
+
+  // total price with delivery fee
+  const totalPrice = subTotal + 2.5;
 
   return (
     <Modal size={"full"} isOpen={isOpen} onClose={onClose}>
@@ -66,12 +83,12 @@ const CheckoutLargeScreen = ({
                 <div className="flex flex-col gap-2">
                   <div className="flex gap-1 items-center">
                     <ShoppingBagIcon className="h-7 w-7" />
-                    <p className="font-medium">L5 3AD</p>
+                    <p className="font-medium">{postcode}</p>
                   </div>
                   <Divider />
                   <div className="flex gap-1 items-center">
                     <UserIcon className="h-7 w-7" />
-                    <p className="font-medium">Gilson de Almeida</p>
+                    <p className="font-medium capitalize">{login}</p>
                   </div>
                 </div>
               </div>
@@ -83,8 +100,9 @@ const CheckoutLargeScreen = ({
                   <option value="option3">Option 3</option>
                 </Select>
               </div>
-              <div className="h-[3rem] w-full bg-black text-white flex justify-center items-center rounded-lg mt-[5%]">
-                Place Order
+              <div className="h-[3rem] w-full bg-black text-white flex justify-center items-center rounded-lg mt-[5%] gap-2 font-semibold">
+                <p className="">Place Order</p> 
+                <p>£{totalPrice.toFixed(2)}</p>
               </div>
             </div>
 
@@ -122,31 +140,27 @@ const CheckoutLargeScreen = ({
                                   position={"relative"}
                                   size={"lg"}
                                 />
-                                <div className="flex pl-[3%] w-full justify-between items-end">
+                                <div className="flex pl-[3%] w-full justify-between items-center">
                                   <div>
                                     <p className="text-sm truncate font-semibold">
                                       {food.name}
                                     </p>
                                     <p className="text-sm text-neutral-500">
-                                      {"£" +
-                                        Number.parseFloat(food.price).toFixed(
-                                          2
-                                        )}
+                                      {"£" + Number(Number.parseFloat(food.price)*foodsActualQuantity(food._id)!).toFixed(2) }
                                     </p>
                                   </div>
-                                  <div className="flex gap-1">
-                                    {/* <div className="h-[5rem] flex items-center gap-2 justify-center">
-                                      <p className="text-xl">Quantity</p>
+                                  <div className="flex flex-col items-end gap-1">
+                                    <div className=" flex items-center gap-2 justify-center">
                                       <p
                                         className={`${
-                                          foodsActualQuantity === 0
+                                          foodsActualQuantity(food._id) === 0
                                             ? "cursor-auto"
                                             : "cursor-pointer"
                                         }`}
                                       >
                                         <MinusCircleIcon
-                                          className={`h-7 w-7  ${
-                                            foodsActualQuantity === 0
+                                          className={`h-5 w-5  ${
+                                            foodsActualQuantity(food._id) === 0
                                               ? "text-neutral-400"
                                               : "text-black"
                                           }`}
@@ -155,18 +169,18 @@ const CheckoutLargeScreen = ({
                                           }
                                         />
                                       </p>
-                                      <p className="text-xl">
-                                        {foodsActualQuantity}
+                                      <p className="text-sm font-semibold">
+                                        {foodsActualQuantity(food._id)}
                                       </p>
                                       <p className="cursor-pointer">
                                         <PlusCircleIcon
-                                          className="h-7 w-7"
+                                          className="h-5 w-5"
                                           onClick={() =>
                                             dispatch(addToCart(food))
                                           }
                                         />
                                       </p>
-                                    </div> */}
+                                    </div>
                                   </div>
                                 </div>
                               </div>
