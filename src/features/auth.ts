@@ -1,11 +1,13 @@
 import { apiSlice } from "./apliSlice";
 import { Meal } from "./Recipe";
 
+
 export interface User {
   name: string | undefined | null;
   email: string | null;
   password: string | null;
   address: string | undefined;
+  users: [] | undefined
 }
 
 export interface UserResponse {

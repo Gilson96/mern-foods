@@ -11,7 +11,6 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  Divider,
 } from "@chakra-ui/react";
 
 type NavigatorBarProps = {
@@ -75,10 +74,8 @@ const NavigatorBar = ({
               <MenuButton>
                 <Avatar size={"sm"} />
               </MenuButton>
-              <MenuList minWidth={0} width={"90px"}>
-                <MenuItem>Sign up</MenuItem>
-                <Divider />
-                <MenuItem>Login</MenuItem>
+              <MenuList minWidth={0} position={'relative'} right={'16'}>
+                <MenuItem as='a' href='/'>{login === 'guest'? 'Log in':'Log Out'}</MenuItem>
               </MenuList>
             </Menu>
         </div>

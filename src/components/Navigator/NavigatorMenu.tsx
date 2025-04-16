@@ -66,14 +66,9 @@ const NavigatorMenu = ({ login }: NavigatorMenuProps) => {
                   onClick={onClose}
                   className="h-7 w-7 place-self-end cursor-pointer"
                 />
-                <Link to="/signup">
-                  <div className="h-[3rem] w-full bg-black text-white flex justify-center items-center rounded-lg">
-                    Sign Up
-                  </div>
-                </Link>
                 <Link to="/">
-                  <div className="h-[3rem] w-full bg-neutral-400 text-white flex justify-center items-center rounded-lg">
-                    Log in
+                  <div className="h-[3rem] w-full bg-black text-white flex justify-center items-center rounded-lg">
+                    Login in
                   </div>
                 </Link>
               </div>
@@ -109,7 +104,9 @@ const NavigatorMenu = ({ login }: NavigatorMenuProps) => {
             <div>
               <Divider />
               <div className="h-[2.5rem] w-[8rem] flex justify-center items-center rounded-full bg-neutral-200 gap-2 mt-[2%]">
-                <p className="font-bold">Sign Out</p>
+                <Link to={'/'}>
+                  <p className="font-bold">Sign Out</p>
+                </Link>
                 <ArrowRightEndOnRectangleIcon className="h-5 w-5" />
               </div>
             </div>
