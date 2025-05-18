@@ -4,14 +4,8 @@ import NavigatorMenu from "./NavigatorMenu";
 import { Link } from "react-router";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import {
-  Avatar,
-  Center,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-} from "@chakra-ui/react";
+import { Center } from "@chakra-ui/react";
+import NavigatorLogInLogOut from "./NavigatorLogInLogOut";
 
 type NavigatorBarProps = {
   setActiveCategory: React.Dispatch<React.SetStateAction<string>>;
@@ -31,11 +25,11 @@ const NavigatorBar = ({
     <>
       <nav className="h-[3rem] w-full flex justify-between items-center small-laptop:h-[1px] small-laptop:pr-[2.5%]">
         <div className="flex items-center gap-3">
-          <NavigatorMenu login={login} />
+          <NavigatorMenu login={login} postcode={postcode} />
           <Link
             to="/home"
             className="flex items-center"
-            state={{ postcode: postcode, login: login }}
+            state={{ postcode: postcode }}
             onClick={() => setActiveCategory("")}
           >
             <p className="text-lg font-semibold tablet:text-xl">Mern-</p>
@@ -51,7 +45,11 @@ const NavigatorBar = ({
         </div>
 
         <div className="max-tablet:hidden w-[50%]">
-          <NavigationSearch setActiveCategory={setActiveCategory} postcode={postcode} login={login} />
+          <NavigationSearch
+            setActiveCategory={setActiveCategory}
+            postcode={postcode}
+            login={login}
+          />
         </div>
 
         <div></div>
@@ -69,15 +67,8 @@ const NavigatorBar = ({
             <p className="text-black font-bold">
               {foodsInTheBasket.length <= 0 ? "" : foodsInTheBasket.length}
             </p>
-            </Center>
-            <Menu>
-              <MenuButton>
-                <Avatar size={"sm"} />
-              </MenuButton>
-              <MenuList minWidth={0} position={'relative'} right={'16'}>
-                <MenuItem as='a' href='/'>{login === 'guest'? 'Log in':'Log Out'}</MenuItem>
-              </MenuList>
-            </Menu>
+          </Center>
+          <NavigatorLogInLogOut login={login} postcode={postcode} />
         </div>
       </nav>
     </>

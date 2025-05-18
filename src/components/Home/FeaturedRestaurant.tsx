@@ -3,13 +3,16 @@ import "swiper/swiper-bundle.css";
 import { Meal } from "../../features/Recipe";
 import RestaurantList from "./RestaurantList";
 import useScreenSize from "../../features/useScreenSize";
+import { Skeleton, Stack, SkeletonText } from "@chakra-ui/react";
 
 type FeaturedRestaurantListProps = {
   title: string;
   subTitle: string;
   featuredRestaurant: Meal[];
-  postcode: string
-  login: string
+  postcode: string;
+  login: string;
+  isLoading: boolean;
+  isFetching: boolean;
 };
 
 const FeaturedRestaurant = ({
@@ -17,7 +20,9 @@ const FeaturedRestaurant = ({
   subTitle,
   featuredRestaurant,
   postcode,
-  login
+  login,
+  isLoading,
+  isFetching,
 }: FeaturedRestaurantListProps) => {
   const screenSize = useScreenSize();
 
@@ -46,18 +51,47 @@ const FeaturedRestaurant = ({
         <Swiper slidesPerView={handleScreenSize()}>
           {featuredRestaurant.map((restaurant: Meal, index) => (
             <SwiperSlide>
-              <RestaurantList
-                key={index}
-                name={restaurant.name}
-                deliveryFee={restaurant.deliveryFee}
-                poster_image={restaurant.poster_image}
-                arrival={restaurant.arrival}
-                rating={restaurant.rating}
-                _id={restaurant._id}
-                isCategoryActive={false}
-                postcode={postcode}
-                login={login}
-              />
+              {isLoading || isFetching ? (
+                <div>
+                  <Stack>
+                    <Skeleton height="8rem" width="10rem" />
+                    <SkeletonText
+                      mt="2"
+                      noOfLines={1}
+                      spacing="4"
+                      skeletonHeight="2"
+                      width="80px"
+                    />
+                    <SkeletonText
+                      mt="2"
+                      noOfLines={1}
+                      spacing="4"
+                      skeletonHeight="2"
+                      width="120px"
+                    />
+                    <SkeletonText
+                      mt="2"
+                      noOfLines={1}
+                      spacing="4"
+                      skeletonHeight="2"
+                      width="60px"
+                    />
+                  </Stack>
+                </div>
+              ) : (
+                <RestaurantList
+                  key={index}
+                  name={restaurant.name}
+                  deliveryFee={restaurant.deliveryFee}
+                  poster_image={restaurant.poster_image}
+                  arrival={restaurant.arrival}
+                  rating={restaurant.rating}
+                  _id={restaurant._id}
+                  isCategoryActive={false}
+                  postcode={postcode}
+                  login={login}
+                />
+              )}
             </SwiperSlide>
           ))}
         </Swiper>

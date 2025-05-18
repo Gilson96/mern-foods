@@ -1,9 +1,8 @@
-import { Avatar, Divider, useToast } from "@chakra-ui/react";
+import { Avatar, Button, Divider, useToast } from "@chakra-ui/react";
 import { LockClosedIcon, UserIcon } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
 import { useLoginMutation } from "../../features/auth";
 import { setCredentials } from "../../features/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 const LoginPage = () => {
@@ -26,7 +25,9 @@ const LoginPage = () => {
       dispatch(setCredentials({ ...userLogin, email }));
       email = "";
       password = "";
-      navigate("/home", { state: { postcode: "M1 1AN", login: "user" } });
+      navigate("/startingPage", {
+        state: { postcode: "M1 1AN", login: "user" },
+      });
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       toast({
@@ -48,8 +49,8 @@ const LoginPage = () => {
         </p>
       </div>
       <form
-        className="h-[20rem] w-[80%] flex flex-col bg-white rounded-xl p-[5%] gap-3 shadow large-phone:w-[60%] tablet:w-[40%] tablet:p-[2%] small-laptop:w-[30%] small-laptop:px-[2%] small-laptop:py-[1%] medium-laptop:w-[20%] large-laptop:w-[20%] large-laptop:px-[2%] large-laptop:py-[0.5%]"
         onSubmit={handleSubmit}
+        className="h-[20rem] w-[80%] flex flex-col bg-white rounded-xl p-[5%] gap-3 shadow large-phone:w-[60%] tablet:w-[40%] tablet:p-[2%] small-laptop:w-[30%] small-laptop:px-[2%] small-laptop:py-[1%] medium-laptop:w-[20%] large-laptop:w-[20%] large-laptop:px-[2%] large-laptop:py-[0.5%]"
       >
         <div className="flex flex-col">
           <div>
@@ -66,7 +67,7 @@ const LoginPage = () => {
             />
           </div>
           <div>
-            <LockClosedIcon className="h-5 w-5 relative top-[32px] left-2 text-neutral-400" />
+            <LockClosedIcon className="h-5 w-5 relative top-[32px] left-2 text-neutral-500" />
             <input
               name="password"
               type="text"
@@ -80,33 +81,26 @@ const LoginPage = () => {
             />
           </div>
         </div>
-        <div className="h-[2.5rem] w-full bg-black text-white flex justify-center items-center rounded-lg place-self-center">
-          <button
-            type="submit"
-            className={`font-bold ${
-              isLoading ? "cursor-progress" : "cursor-pointer"
-            }`}
-          >
-            Login
-          </button>
-        </div>
+        <Button
+          type="submit"
+          bg={"black"}
+          color={"white"}
+          _hover={{ bg: "#262626" }}
+          isLoading={isLoading ? true : false}
+        >
+          Login
+        </Button>
         <div className="flex items-center">
           <Divider />
           <p className="px-[5%]">or</p>
           <Divider />
         </div>
-        <Link to="/startingPage" state={"guest"}>
-          <div className="h-[2.5rem] w-full bg-neutral-400 text-white flex justify-center items-center rounded-lg font-bold">
+        <Link to="/startingPage" state={{ login: "guest" }}>
+          <Button w={"full"} type="submit" colorScheme="blackAlpha">
             Continue as a guest
-          </div>
+          </Button>
         </Link>
       </form>
-      <div className="flex gap-2">
-        <p>New to us?</p>
-        <Link to="/signup">
-          <p className="font-bold hover:underline">Sign Up</p>
-        </Link>
-      </div>
     </div>
   );
 };

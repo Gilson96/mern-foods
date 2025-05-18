@@ -10,7 +10,7 @@ export interface Meal {
   address: string | undefined;
   rating: string;
   category: string | undefined;
-  isCategoryActive: boolean;
+  isCategoryActive: string;
   foods: [];
   description: string;
   price: string;
@@ -19,6 +19,7 @@ export interface Meal {
   restaurant: string;
   date: string | undefined;
   body: Meal[] | undefined
+  foodsInTheBasket: Meal[]
 }
 
 const allMoviesApi = apiSlice.injectEndpoints({

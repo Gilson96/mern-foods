@@ -1,19 +1,18 @@
-import { HeartIcon } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import useScreenSize from "../../features/useScreenSize";
 
 type RestaurantListProps = {
-  postcode: string, 
-  login: string
-  name: string,
-  deliveryFee: string,
-  rating: string,
-  poster_image: string,
-  arrival: number,
-  _id: string,
-  isCategoryActive: boolean
-}
+  postcode: string;
+  login: string;
+  name: string;
+  deliveryFee: string;
+  rating: string;
+  poster_image: string;
+  arrival: number;
+  _id: string;
+  isCategoryActive: boolean;
+};
 
 const RestaurantList = ({
   name,
@@ -24,16 +23,18 @@ const RestaurantList = ({
   isCategoryActive,
   _id,
   postcode,
-  login
+  login,
 }: RestaurantListProps) => {
-  const screenSize = useScreenSize()
-
-  const largePhone = screenSize.width >= 425 && screenSize.width < 768
+  const screenSize = useScreenSize();
+  const largePhone = screenSize.width >= 425 && screenSize.width < 768;
 
   return (
     <Link
       to={`/restaurant/${_id}`}
-      state={{postcode: postcode, login: login}}
+      state={{
+        postcode: postcode,
+        login: login,
+      }}
       className={`${
         isCategoryActive ? "h-full w-full" : "w-[90%]"
       }  flex flex-col`}
@@ -46,7 +47,13 @@ const RestaurantList = ({
       >
         <img
           style={{
-            height: isCategoryActive ? largePhone ? 13 + "rem" : 10 + 'rem' : screenSize.width < 1024 ?  8 + "rem" : 10 + 'rem',
+            height: isCategoryActive
+              ? largePhone
+                ? 13 + "rem"
+                : 10 + "rem"
+              : screenSize.width < 1024
+              ? 8 + "rem"
+              : 10 + "rem",
             width: 100 + "%",
           }}
           src={poster_image}
@@ -63,7 +70,6 @@ const RestaurantList = ({
         }`}
       >
         <p className="font-semibold truncate">{name}</p>
-        <HeartIcon className="h-5 w-5 text-neutral-400" />
       </div>
 
       {/* delivery Fee */}

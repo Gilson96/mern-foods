@@ -1,26 +1,25 @@
 import NavigationSearch from "../Navigator/NavigationSearch";
 import { useGetRestaurantsQuery } from "../../features/Recipe";
 import { useState } from "react";
-import Categories from "./Categories";
 import FeaturedRestaurant from "./FeaturedRestaurant";
 import RestaurantList from "./RestaurantList";
 import NavigatorBar from "../Navigator/NavigatorBar";
 import { useLocation } from "react-router-dom";
-import { Spinner } from "@chakra-ui/react";
+import StartingPageUser from "../Login/StartingPageUser";
+import { PaymentIntentResult } from "@stripe/stripe-js";
 
 type HomeProps = {
-  state: { postcode: string; login: string };
+  state: { postcode: string; login: string, result: PaymentIntentResult };
 };
 
 const Home = () => {
   const [activeCategory, setActiveCategory] = useState<string>("");
-  const { data: restaurants, isLoading } = useGetRestaurantsQuery();
+  const { data: restaurants, isLoading, isFetching } = useGetRestaurantsQuery();
   // which login is, 'guest' or 'user'
   // state coming from <Link/>
   const { state }: HomeProps = useLocation();
 
-  if (!restaurants) return <Spinner />;
-  if (isLoading) return <p>...</p>;
+  if (!restaurants) return <StartingPageUser />;
 
   // push objects coming from backend
   // to an array and destruct
@@ -47,6 +46,7 @@ const Home = () => {
     (restaurant) => restaurant.category === activeCategory
   );
 
+  console.log(state.result)
   return (
     <main className="h-full w-full flex flex-col p-[3%]">
       {/* Navigator */}
@@ -62,52 +62,50 @@ const Home = () => {
         </p>
       </div>
       <div className="tablet:hidden">
-        <NavigationSearch setActiveCategory={setActiveCategory} postcode={state.postcode} login={state.login} />
+        <NavigationSearch
+          setActiveCategory={setActiveCategory}
+          postcode={state.postcode}
+          login={state.login}
+        />
       </div>
 
-      {/* categories list */}
-      <section
-        className={`${activeCategory && "hidden"} w-full small-laptop:hidden`}
-      >
-        <div className="flex items-center justify-between">
-          <Categories setActiveCategory={setActiveCategory} />
-          <p className="h-[4rem] bg-white text-black flex flex-col justify-center items-center p-4 rounded-xl gap-2 text-sm tablet:w-[20%] max-tablet:hidden "></p>
-          <p className="h-[4rem] bg-neutral-300 text-black flex flex-col justify-center items-center p-4 rounded-xl gap-2 text-sm tablet:w-[20%] max-tablet:hidden">
-            <span>Deliver to</span>
-            <span className="text-base font-medium">{state.postcode}</span>
-          </p>
-        </div>
-        <hr className="w-[96%] relative left-[2rem]" />
-      </section>
-
+      {/* Restaurant */}
       {activeCategory === "" ? (
         <div className="small-laptop:pt-[3%] small-laptop:pl-[3.5%]">
-          {/* Highest rated Restaurant */}
-          <FeaturedRestaurant
-            title="Highest rated"
-            subTitle="Top Rated and quality restaurant"
-            featuredRestaurant={highestRatedRestaurant}
-            postcode={state.postcode}
-            login={state.login}
-          />
-          <hr className="w-full" />
-          {/* Lowest delivery fee Restaurant list */}
-          <FeaturedRestaurant
-            title="Low Cost Fee"
-            subTitle="Restaurants with the lowest delivery fee"
-            featuredRestaurant={lowCostFeeRestaurant}
-            postcode={state.postcode}
-            login={state.login}
-          />
-          <hr className="w-full" />
-          {/* Lowest arrival time Restaurant list */}
-          <FeaturedRestaurant
-            title="In a Rush?"
-            subTitle="Restaurant with the quickest arrival time"
-            featuredRestaurant={fastestRestaurant}
-            postcode={state.postcode}
-            login={state.login}
-          />
+          <>
+            {/* Highest rated Restaurant */}
+            <FeaturedRestaurant
+              title="Highest rated"
+              subTitle="Top Rated and quality restaurant"
+              featuredRestaurant={highestRatedRestaurant}
+              postcode={state.postcode}
+              login={state.login}
+              isLoading={isLoading}
+              isFetching={isFetching}
+            />
+            <hr className="w-full" />
+            {/* Lowest delivery fee Restaurant list */}
+            <FeaturedRestaurant
+              title="Low Cost Fee"
+              subTitle="Restaurants with the lowest delivery fee"
+              featuredRestaurant={lowCostFeeRestaurant}
+              postcode={state.postcode}
+              login={state.login}
+              isLoading={isLoading}
+              isFetching={isFetching}
+            />
+            <hr className="w-full" />
+            {/* Lowest arrival time Restaurant list */}
+            <FeaturedRestaurant
+              title="In a Rush?"
+              subTitle="Restaurant with the quickest arrival time"
+              featuredRestaurant={fastestRestaurant}
+              postcode={state.postcode}
+              login={state.login}
+              isLoading={isLoading}
+              isFetching={isFetching}
+            />
+          </>
         </div>
       ) : (
         // Restaurants selected via categories

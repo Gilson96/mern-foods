@@ -7,35 +7,63 @@ type ReviewsProps = {
 };
 
 const Reviews = ({ _id }: ReviewsProps) => {
-  const { data: reviews, isLoading } = useGetRestaurantReviewsQuery(_id!);
+  const {
+    data: reviews,
+    isLoading,
+    isFetching,
+  } = useGetRestaurantReviewsQuery(_id!);
 
-  if (!reviews) return <p></p>;
-  if (isLoading) return <p>...</p>;
+  const loading = !reviews || isLoading || isFetching;
 
   return (
     <>
-      <div className="pr-[3%] pl-[7%]">
+      <div className="small-laptop:pl-[7%] small-laptop:pr-[3%] tablet:px-[3%] max-tablet:pb-[5%] px-[5%]  ">
         <p className="py-[2%] text-xl font-bold">Reviews</p>
-        <div className="flex gap-2">
-          {reviews.ratings_and_reviews?.map((review: Meal) => (
+        <div className="tablet:flex-row  flex flex-col gap-2">
+          {loading ? (
             <Card>
               <CardBody>
-                <div className="pb-[5%]">"{review.description}"</div>
+                <div
+                  className={`${loading && "h-[1rem] w-[15rem] bg-neutral-300"} pb-[5%]`}
+                ></div>
+                <div
+                  className={`${loading && "h-[1rem] w-[15rem] bg-neutral-300"} pb-[5%]`}
+                ></div>
                 <div>
                   <div className="flex items-center gap-1">
                     <div className="flex items-center gap-0.5">
-                      <p className="font-semibold">{review.rating}</p>
+                       <p className= {`${loading && "h-[1rem] w-[3rem] bg-neutral-300"} font-semibold`}></p> 
                       <StarIcon className="h-4 w-4" />
-                    </div> 
+                    </div>
                     <span className="text-neutral-500">&#183;</span>
-                    <p className="text-neutral-600">{review.name}</p>
-                    <span className="text-neutral-500">&#183;</span>
-                    <p className="text-neutral-600">{review.date}</p>
+                    <p className={`${loading && "h-[1rem] w-[3rem] bg-neutral-300"} text-neutral-600`}></p>
+                    <span className={`${loading && "h-[1rem] w-[3rem] bg-neutral-300"} text-neutral-500`}>&#183;</span>
+                     <p className={`${loading && "h-[1rem] w-[3rem] bg-neutral-300"} text-neutral-600`}></p> 
                   </div>
                 </div>
               </CardBody>
             </Card>
-          ))}
+          ) : (
+            reviews.ratings_and_reviews?.map((review: Meal) => (
+              <Card>
+                <CardBody>
+                  <div className="pb-[5%]">"{review.description}"</div>
+                  <div>
+                    <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-0.5">
+                        <p className="font-semibold">{review.rating}</p>
+                        <StarIcon className="h-4 w-4" />
+                      </div>
+                      <span className="text-neutral-500">&#183;</span>
+                      <p className="text-neutral-600">{review.name}</p>
+                      <span className="text-neutral-500">&#183;</span>
+                      <p className="text-neutral-600">{review.date}</p>
+                    </div>
+                  </div>
+                </CardBody>
+              </Card>
+            ))
+          )}
         </div>
       </div>
     </>

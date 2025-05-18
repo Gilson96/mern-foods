@@ -1,13 +1,21 @@
 import { apiSlice } from "./apliSlice";
 import { Meal } from "./Recipe";
 
-
 export interface User {
+
   name: string | undefined | null;
   email: string | null;
   password: string | null;
   address: string | undefined;
-  users: [] | undefined
+  users: [
+    {
+      name: string | undefined;
+      address: string | undefined;
+      favouritesRestaurants?: [] | undefined;
+      _id: string;
+      orders?: [];
+    }
+  ];
 }
 
 export interface UserResponse {
@@ -18,6 +26,11 @@ export interface UserResponse {
 export interface LoginRequest {
   email: string;
   password: string;
+}
+
+export interface PaymenyIntent {
+  totalPrice: number;
+  clientSecret?: string;
 }
 
 const auth = apiSlice.injectEndpoints({
@@ -33,19 +46,63 @@ const auth = apiSlice.injectEndpoints({
     getUser: build.query<User, void>({
       query: () => ({ url: "/user" }),
     }),
-    
-    postToFavourite: build.mutation<UserResponse, Meal>({
+
+    logout: build.mutation<UserResponse, void>({
+      query: () => ({
+        url: "logout",
+        method: "POST",
+      }),
+    }),
+
+    postToFavourite: build.mutation<
+      UserResponse,
+      {
+        userId: string | undefined;
+        body: {
+          _id: string;
+          name: string;
+          deliveryFee: string;
+          arrival: number;
+          rating: string;
+          poster_image: string;
+        };
+      }
+    >({
       query: (data) => {
-        const { _id, body } = data;
+        const { userId, body } = data;
         return {
-          url: `${_id}/favourite`,
+          url: `${userId}/favourites`,
           method: "POST",
           body,
         };
       },
     }),
 
-    postToOrders: build.mutation<UserResponse, Meal>({
+    removeFromFavourite: build.mutation<
+      UserResponse,
+      { userId: string | undefined; restaurantId: string | undefined }
+    >({
+      query: (data) => {
+        const { userId, restaurantId } = data;
+        return {
+          url: `${userId}/favourites/${restaurantId}`,
+          method: "POST",
+        };
+      },
+    }),
+
+    postToOrders: build.mutation<
+      UserResponse,
+      {
+        _id: string;
+        body: {
+          restaurantId: string;
+          foods: Meal[];
+          totalPrice: number;
+          timeStamp: number;
+        };
+      }
+    >({
       query: (data) => {
         const { _id, body } = data;
         return {
@@ -56,8 +113,24 @@ const auth = apiSlice.injectEndpoints({
       },
     }),
 
+    postPayementIntent: build.mutation<PaymenyIntent, PaymenyIntent>({
+      query: (body) => ({
+        url: `payment-intent`,
+        method: "POST",
+        body,
+      }),
+    }),
   }),
+
   overrideExisting: false,
 });
 
-export const { useLoginMutation, usePostToFavouriteMutation, usePostToOrdersMutation, useGetUserQuery } = auth;
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useGetUserQuery,
+  usePostToFavouriteMutation,
+  useRemoveFromFavouriteMutation,
+  usePostToOrdersMutation,
+  usePostPayementIntentMutation,
+} = auth;

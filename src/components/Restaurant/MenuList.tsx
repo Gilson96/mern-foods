@@ -29,6 +29,7 @@ export const MenuList = ({
   return (
     <>
       {screenSize.width < 1024 ? (
+        // small screen
         <section
           onClick={onOpen}
           className="h-[10rem] w-full flex justify-between items-center"
@@ -60,6 +61,7 @@ export const MenuList = ({
           />
         </section>
       ) : (
+        // big screen
         <section className="px-[6%] mt-[2%] pb-[3%]">
           <Card
             direction={{ base: "column", sm: "row" }}
