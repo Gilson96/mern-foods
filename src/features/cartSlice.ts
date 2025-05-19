@@ -40,6 +40,10 @@ export const cartSlice = createSlice({
           price: action.payload.price,
           quantity: action.payload.quantity + 1,
           restaurant: action.payload.restaurant,
+          ratings_and_reviews: undefined,
+          date: undefined,
+          body: undefined,
+          foodsInTheBasket: []
         });
       }
     },
