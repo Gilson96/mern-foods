@@ -41,7 +41,7 @@ const RestaurantHeroImage = ({
     try {
       if (!checkIfExistInFavourites()) {
         await addToFavourites({
-          userId: user?.users[0]._id,
+          userId: user?.users?.[0]._id,
           body: {
             _id: restaurant!._id,
             name: restaurant!.name,
@@ -60,7 +60,7 @@ const RestaurantHeroImage = ({
         });
       } else {
         await removeFromFavourites({
-          userId: user?.users[0]._id,
+          userId: user?.users?.[0]._id,
           restaurantId: restaurantId,
         }).unwrap();
         refetch();

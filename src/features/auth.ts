@@ -8,6 +8,7 @@ export interface User {
   address: string | undefined;
   users: [
     {
+      _id: string
       name: string | undefined;
       address: string | undefined;
       favouritesRestaurants?: [{ _id: string }];
