@@ -25,22 +25,21 @@ const UserFavourites = () => {
 
   if (!user && !restaurant) return <StartingPageUser />;
 
-  const userFavouritesRestaurants = user?.users[0].favouritesRestaurants?.map(
-    (find: { id: string }) => find.id
+  const userFavouritesRestaurants = user?.users[0]?.favouritesRestaurants?.map(
+    (find) => find._id
   );
 
   const findRestaurant = () => {
     const restaurants = [];
     for (let i = 0; i < userFavouritesRestaurants!.length; i++) {
       const finder = restaurant?.find(
-        (find) => find._id === user?.users[0].favouritesRestaurants[i]?._id
+        (find) => find._id === user?.users[0].favouritesRestaurants?.[i]._id
       );
 
       restaurants.push(finder);
     }
     return restaurants;
   };
-  
 
   return (
     <div className="flex flex-col p-[3%]">

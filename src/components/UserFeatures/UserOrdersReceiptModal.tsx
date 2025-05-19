@@ -12,12 +12,11 @@ import { XCircleIcon } from "@heroicons/react/24/outline";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 import { FaCcStripe } from "react-icons/fa6";
 import { Meal } from "../../features/Recipe";
-import { User } from "../../features/auth";
 
 type UserOrdersReceiptModalProps = {
-  restaurant: Meal;
+  restaurant?: Meal;
   totalPrice: number;
-  userFoods: User;
+  userFoods?: Meal[];
 };
 
 const UserOrdersReceiptModal = ({
@@ -55,10 +54,10 @@ const UserOrdersReceiptModal = ({
               </p>
               <div className="flex justify-between items-center font-bold text-lg">
                 <p className="">Total</p>
-                <p>{"£ " + totalPrice}</p>
+                <p>{"£ " + Number(totalPrice).toFixed(2)}</p>
               </div>
               <Divider />
-              {userFoods.map((food) => (
+              {userFoods?.map((food) => (
                 <div className="flex justify-between items-center my-[4%]">
                   <div className="flex items-center gap-2">
                     <Square

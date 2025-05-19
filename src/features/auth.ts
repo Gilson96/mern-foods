@@ -2,7 +2,6 @@ import { apiSlice } from "./apliSlice";
 import { Meal } from "./Recipe";
 
 export interface User {
-
   name: string | undefined | null;
   email: string | null;
   password: string | null;
@@ -11,9 +10,13 @@ export interface User {
     {
       name: string | undefined;
       address: string | undefined;
-      favouritesRestaurants?: [] | undefined;
-      _id: string;
-      orders?: [];
+      favouritesRestaurants?: [{ _id: string }];
+      orders?: [{
+        restaurantId?: string,
+        foods?: Meal[],
+        id?: string,
+        totalPrice: number
+      }];
     }
   ];
 }

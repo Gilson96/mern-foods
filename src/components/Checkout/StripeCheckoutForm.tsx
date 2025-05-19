@@ -5,7 +5,6 @@ import {
 } from "@stripe/react-stripe-js";
 import { useNavigate } from "react-router-dom";
 import { Alert, AlertIcon, AlertTitle, Button } from "@chakra-ui/react";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { emptyCart } from "../../features/cartSlice";
 import { persistor } from "../../store";
@@ -34,7 +33,6 @@ const StripeCheckoutForm = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [success, setSuccess] = useState<boolean>(false);
   const [addToOrders, { isLoading }] = usePostToOrdersMutation();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -58,7 +56,6 @@ const StripeCheckoutForm = ({
         <AlertTitle>{result.error.message}</AlertTitle>
       </Alert>;
     } else {
-      setSuccess(true);
       for (let index = 0; index < findRestaurants.length; index++) {
         const newFoods = foodsInTheBasket.filter(
           (res) => res.restaurant === findRestaurants[index]._id
@@ -94,7 +91,7 @@ const StripeCheckoutForm = ({
         disabled={!stripe}
         type="submit"
         isLoading={isLoading && true}
-        onClick={() => success && onClose()}
+        onClick={onClose}
       >
         Pay Now
       </Button>

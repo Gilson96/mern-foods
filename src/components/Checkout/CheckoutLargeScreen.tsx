@@ -18,8 +18,6 @@ import {
 } from "./CheckoutLargeScreenHeader_and_Summary";
 import { useState } from "react";
 
-
-
 type CheckoutLargeScreenProps = {
   findRestaurants: Meal[];
   isOpen: boolean;

@@ -37,7 +37,7 @@ type CheckoutLargeScreenSummmaryProps = {
   findRestaurants: Meal[];
   foodsInTheBasket: Meal[];
   foodsActualQuantity: (food_id: string) => number | undefined;
-  clientSecret: PaymenyIntent;
+  clientSecret: PaymenyIntent | undefined;
   onClose: () => void;
   login: string;
   postcode: string;
@@ -54,17 +54,15 @@ export const CheckoutLargeScreenSummary = ({
   postcode,
   totalPrice,
 }: CheckoutLargeScreenSummmaryProps) => {
-  const options = {
-    ...clientSecret,
-    appearance: {
-      theme: "stripe",
-    },
-  };
   return (
-    <div className={`${clientSecret? 'h-full p-[2%]' : 'h-[30rem]'} w-[30%]  flex flex-col bg-white shadow-xl rounded-xl`}>
+    <div
+      className={`${
+        clientSecret ? "h-[30rem] p-[2%] overflow-auto" : "h-[30rem]"
+      } w-[30%] flex flex-col bg-white shadow-xl rounded-xl`}
+    >
       {!clientSecret ? (
         <>
-          <div className="flex items-center px-[3%] py-[4%] gap-2 place-self-center">
+          <div className="flex items-center  px-[3%] py-[4%] gap-2 place-self-center">
             <ShoppingCartIcon className="h-7 w-7" />
             <p className="font-bold text-lg">Cart Summary</p>
           </div>
@@ -85,7 +83,7 @@ export const CheckoutLargeScreenSummary = ({
           })}
         </>
       ) : (
-        <Elements stripe={stripePromise} options={options}>
+        <Elements stripe={stripePromise} options={clientSecret}>
           <StripeCheckoutForm
             onClose={onClose}
             login={login}

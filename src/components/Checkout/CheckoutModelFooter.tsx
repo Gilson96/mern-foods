@@ -1,8 +1,5 @@
 import { ModalFooter, Divider, useToast } from "@chakra-ui/react";
-import {
-  PaymenyIntent,
-  usePostPayementIntentMutation,
-} from "../../features/auth";
+import { PaymenyIntent, usePostPayementIntentMutation } from "../../features/auth";
 import { useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -59,12 +56,6 @@ const CheckoutModelFooter = ({
     }
   };
 
-  const options = {
-    ...clientSecret,
-    appearance: {
-      theme: "stripe",
-    },
-  };
   return (
     <ModalFooter>
       <div className="w-full h-full flex flex-col">
@@ -93,7 +84,7 @@ const CheckoutModelFooter = ({
             </div>
           </>
         ) : (
-          <Elements stripe={stripePromise} options={options}>
+          <Elements stripe={stripePromise} options={clientSecret}>
             <StripeCheckoutForm
               onClose={onClose}
               login={login}
