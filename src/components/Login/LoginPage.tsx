@@ -40,7 +40,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col justify-center items-center bg-neutral-200 gap-2">
+    <div className="h-screen w-screen flex flex-col justify-center items-center bg-white gap-2">
       <div className="flex flex-col items-center">
         <Avatar size="md" bgColor={"black"} />
         <p className="text-2xl">
@@ -50,7 +50,7 @@ const LoginPage = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="h-[20rem] w-[80%] flex flex-col bg-white rounded-xl p-[5%] gap-3 shadow large-phone:w-[60%] tablet:w-[40%] tablet:p-[2%] small-laptop:w-[30%] small-laptop:px-[2%] small-laptop:py-[1%] medium-laptop:w-[20%] large-laptop:w-[20%] large-laptop:px-[2%] large-laptop:py-[0.5%]"
+        className="h-[20rem] w-[80%] flex flex-col bg-white rounded-xl p-[5%] gap-3 shadow-2xl large-phone:w-[60%] tablet:w-[40%] tablet:p-[2%] small-laptop:w-[30%] small-laptop:px-[2%] small-laptop:py-[1%] medium-laptop:w-[20%] large-laptop:w-[20%] large-laptop:px-[2%] large-laptop:py-[0.5%]"
       >
         <div className="flex flex-col">
           <div>
