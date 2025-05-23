@@ -1,7 +1,7 @@
 # MERN-foods
 
 ### Project Overview
-***
+ ---------------
 **MERN Foods** is a full-stack Uber Eats-style food ordering app built with the MERN stack:
 
 - **Frontend:** React, Redux-Toolkit, React Router
