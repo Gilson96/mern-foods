@@ -12,3 +12,7 @@
 This project demonstrates practical skills in building modern web apps used by food delivery platforms. It focuses on clean UI, seamless UX, and real-world payment processing.
 
 ###
+
+#### Demo
+- Live frontend: https://gilson96.github.io/mern-foods/
+- Backend API: https://react-food-api-03d094431a6b.herokuapp.com/
