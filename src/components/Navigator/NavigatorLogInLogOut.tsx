@@ -12,13 +12,14 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { persistor } from "../../store";
 import { useLogoutMutation } from "../../features/auth";
+import { memo } from "react";
 
 type NavigatorLogInLogOutProps = {
   login: string;
   postcode: string;
 };
 
-const NavigatorLogInLogOut = ({ login }: NavigatorLogInLogOutProps) => {
+const NavigatorLogInLogOut = memo(({ login }: NavigatorLogInLogOutProps) => {
   const toast = useToast();
   const [logout] = useLogoutMutation();
   const dispatch = useDispatch();
@@ -66,6 +67,6 @@ const NavigatorLogInLogOut = ({ login }: NavigatorLogInLogOutProps) => {
       </MenuList>
     </Menu>
   );
-};
+});
 
 export default NavigatorLogInLogOut;

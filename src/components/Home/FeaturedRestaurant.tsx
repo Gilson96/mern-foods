@@ -50,7 +50,7 @@ const FeaturedRestaurant = ({
       <div className="mt-[2%] large-phone:mt-[4%] small-laptop:mt-[2%]">
         <Swiper slidesPerView={handleScreenSize()}>
           {featuredRestaurant.map((restaurant: Meal, index) => (
-            <SwiperSlide>
+            <SwiperSlide key={index}>
               {isLoading || isFetching ? (
                 <div>
                   <Stack>

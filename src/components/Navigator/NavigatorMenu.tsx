@@ -15,13 +15,14 @@ import {
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import { useGetUserQuery } from "../../features/auth";
 import { Link } from "react-router-dom";
+import { memo } from "react";
 
 type NavigatorMenuProps = {
   login: string;
   postcode: string;
 };
 
-const NavigatorMenu = ({ login, postcode }: NavigatorMenuProps) => {
+const NavigatorMenu = memo(({ login, postcode }: NavigatorMenuProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data: user, isLoading } = useGetUserQuery();
 
@@ -105,6 +106,6 @@ const NavigatorMenu = ({ login, postcode }: NavigatorMenuProps) => {
       )}
     </>
   );
-};
+});
 
 export default NavigatorMenu;

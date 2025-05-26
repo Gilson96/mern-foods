@@ -34,7 +34,6 @@ const Restaurant = () => {
   const { state }: RestaurantProps = useLocation();
   const screenSize = useScreenSize();
 
-console.log(state)
   return (
     <>
       <div className="max-tablet:p-[3%] tablet:py-[2%] tablet:px-[1%] small-laptop:py-[3%] desktop:pl-[3%]">
@@ -52,7 +51,8 @@ console.log(state)
           isLoading={isLoading}
           isFetching={isFetching}
           restaurant={restaurant}
-          
+          login={state.login}
+          postcode={state.postcode}
         />
         {/* Restaurant Details small screen */}
         {screenSize.width < 1024 ? (

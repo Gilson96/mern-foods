@@ -44,8 +44,8 @@ const Reviews = ({ _id }: ReviewsProps) => {
               </CardBody>
             </Card>
           ) : (
-            reviews.ratings_and_reviews?.map((review: Meal) => (
-              <Card>
+            reviews.ratings_and_reviews?.map((review: Meal, index) => (
+              <Card key={index}>
                 <CardBody>
                   <div className="pb-[5%]">"{review.description}"</div>
                   <div>

@@ -5,6 +5,7 @@ import { removeFromCart, addToCart } from "../../features/cartSlice";
 import useScreenSize from "../../features/useScreenSize";
 import { Meal } from "../../features/Recipe";
 import { useDispatch } from "react-redux";
+import { memo } from "react";
 
 type FoodLargeScreenProps = {
   poster_image: string;
@@ -17,7 +18,7 @@ type FoodLargeScreenProps = {
   foodsTotalPrice: () => number;
 };
 
-const FoodLargeScreen = ({
+const FoodLargeScreen = memo(({
   poster_image,
   onClose,
   name,
@@ -109,6 +110,6 @@ const FoodLargeScreen = ({
       </div>
     </>
   );
-};
+});
 
 export default FoodLargeScreen;

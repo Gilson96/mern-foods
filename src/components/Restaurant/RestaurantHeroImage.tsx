@@ -7,7 +7,6 @@ import {
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 import { useToast } from "@chakra-ui/react";
-import StartingPageUser from "../Login/StartingPageUser";
 
 type RestaurantHeroImageProps = {
   favouritesRestaurants: [];
@@ -15,6 +14,8 @@ type RestaurantHeroImageProps = {
   restaurant: Meal | undefined;
   isLoading: boolean;
   isFetching: boolean;
+  login: string;
+  postcode: string;
 };
 
 const RestaurantHeroImage = ({
@@ -28,8 +29,6 @@ const RestaurantHeroImage = ({
   const { data: user, refetch } = useGetUserQuery();
   const loading = !restaurant || isLoading || isFetching;
   const toast = useToast();
-
-  if (!user) return <StartingPageUser />;
 
   const checkIfExistInFavourites = () => {
     return user?.users[0].favouritesRestaurants?.some(
@@ -76,8 +75,6 @@ const RestaurantHeroImage = ({
     }
   };
 
-  console.log(checkIfExistInFavourites());
-
   return (
     <div
       style={{
@@ -88,7 +85,13 @@ const RestaurantHeroImage = ({
       } h-[10rem] w-full absolute bg-neutral-400 bg-center bg-no-repeat bg-cover left-0 flex justify-end p-[2%] gap-1  tablet:h-[15rem] large-phone:h-[12rem] small-laptop:w-[90%] small-laptop:relative small-laptop:left-[7%] small-laptop:rounded-xl small-laptop:top-[0.5rem] small-laptop:h-[20rem] medium-laptop:h-[25rem] medium-laptop:left-[6%] medium-laptop:top-0`}
       onClick={addOrRemoveFavourites}
     >
-      <span className="h-[3rem] w-[3rem] bg-white flex justify-center items-center rounded-full shadow-lg cursor-pointer">
+      <span
+        className={
+          !user
+            ? "invisible"
+            : "h-[3rem] w-[3rem] bg-white flex justify-center items-center rounded-full shadow-lg cursor-pointer"
+        }
+      >
         {!checkIfExistInFavourites() ? (
           <HeartIcon className="h-6 w-6 text-black" />
         ) : (

@@ -46,7 +46,6 @@ const Home = () => {
     (restaurant) => restaurant.category === activeCategory
   );
 
-  console.log(state.result)
   return (
     <main className="h-full w-full flex flex-col p-[3%]">
       {/* Navigator */}

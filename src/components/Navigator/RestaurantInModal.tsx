@@ -1,5 +1,6 @@
 import useScreenSize from "../../features/useScreenSize";
 import { Divider, Avatar } from "@chakra-ui/react";
+import { memo } from "react";
 import { Link } from "react-router-dom";
 
 type RestaurantProps = {
@@ -11,7 +12,7 @@ type RestaurantProps = {
   login: string;
 };
 
-const RestaurantInModal = ({
+const RestaurantInModal = memo(({
   name,
   logo_image,
   _id,
@@ -41,6 +42,6 @@ const RestaurantInModal = ({
       </ul>
     </Link>
   );
-};
+});
 
 export default RestaurantInModal;

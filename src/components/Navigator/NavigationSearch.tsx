@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useGetRestaurantsQuery } from "../../features/Recipe";
 import { ArrowLeftIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { memo, useState } from "react";
 import useScreenSize from "../../features/useScreenSize";
 import { Meal } from "../../features/Recipe";
 import TabelPanel from "./TabelPanel";
@@ -20,11 +20,11 @@ type NavigationSearchProps = {
   setActiveCategory: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function NavigationSearch({
+const NavigationSearch = memo(({
   postcode,
   login,
   setActiveCategory,
-}: NavigationSearchProps) {
+}: NavigationSearchProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data: restaurants, isLoading, isFetching } = useGetRestaurantsQuery();
@@ -95,4 +95,6 @@ export default function NavigationSearch({
       </Modal>
     </>
   );
-}
+})
+
+export default NavigationSearch

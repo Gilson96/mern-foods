@@ -18,7 +18,7 @@ type ShoppingCartRestaurantProps = {
   selectedFoods: Meal[] | undefined;
   index: number | undefined;
   foods: Meal;
-  foodsActualQuantity: (food_id: string) => number | undefined
+  foodsActualQuantity: (food_id: string) => number | undefined;
 };
 
 export const ShoppingCartRestaurantSmallScreen = ({
@@ -54,9 +54,9 @@ export const ShoppingCartRestaurantSmallScreen = ({
 export const ShoppingCartRestaurantLargeScreen = ({
   selectedFoods,
   foods,
-  foodsActualQuantity
+  foodsActualQuantity,
 }: ShoppingCartRestaurantProps) => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   return (
     <div className="w-full">
       <Accordion allowToggle>
@@ -77,8 +77,11 @@ export const ShoppingCartRestaurantLargeScreen = ({
           </h2>
           <AccordionPanel>
             <div className="flex flex-col gap-2 overflow-x-hidden">
-              {selectedFoods?.map((food: Meal) => (
-                <div className="flex items-center justify-between px-[1%] overflow-x-hidden">
+              {selectedFoods?.map((food: Meal, index) => (
+                <div
+                  className="flex items-center justify-between px-[1%] overflow-x-hidden"
+                  key={index}
+                >
                   <Avatar src={food.poster_image} size={"lg"} />
                   <div className="flex flex-col items-start justify-start w-full pl-[5%]">
                     <p className="font-semibold">{food.name}</p>

@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { Center } from "@chakra-ui/react";
 import NavigatorLogInLogOut from "./NavigatorLogInLogOut";
+import { memo } from "react";
 
 type NavigatorBarProps = {
   setActiveCategory: React.Dispatch<React.SetStateAction<string>>;
@@ -13,7 +14,7 @@ type NavigatorBarProps = {
   postcode: string;
 };
 
-const NavigatorBar = ({
+const NavigatorBar = memo(({
   setActiveCategory,
   login,
   postcode,
@@ -73,6 +74,6 @@ const NavigatorBar = ({
       </nav>
     </>
   );
-};
+});
 
 export default NavigatorBar;

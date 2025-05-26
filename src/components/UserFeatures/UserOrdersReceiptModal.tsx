@@ -28,14 +28,16 @@ const UserOrdersReceiptModal = ({
   return (
     <>
       <div onClick={onOpen} className="flex items-center gap-1">
-        <p className="underline-offset-2 underline cursor-pointer hover:text-neutral-500">View Receipt</p>
+        <p className="underline-offset-2 underline cursor-pointer hover:text-neutral-500">
+          View Receipt
+        </p>
         <ChevronRightIcon className="h-4 w-4" />
       </div>
 
       <Modal size={"full"} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent bg={'#e5e5e5'} className="small-laptop:bg-neutral-300">
-          <ModalHeader w={"full"} bg={'white'}>
+        <ModalContent bg={"#e5e5e5"} className="small-laptop:bg-neutral-300">
+          <ModalHeader w={"full"} bg={"white"}>
             <div className="w-full flex justify-between items-center">
               <p>
                 <span className="font-normal">Mern-</span>
@@ -57,8 +59,11 @@ const UserOrdersReceiptModal = ({
                 <p>{"£ " + Number(totalPrice).toFixed(2)}</p>
               </div>
               <Divider />
-              {userFoods?.map((food) => (
-                <div className="flex justify-between items-center my-[4%]">
+              {userFoods?.map((food, index) => (
+                <div
+                  key={index}
+                  className="flex justify-between items-center my-[4%]"
+                >
                   <div className="flex items-center gap-2">
                     <Square
                       size="7"

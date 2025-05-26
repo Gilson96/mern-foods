@@ -34,9 +34,10 @@ const Menu = ({ _id, postcode, login }: MenuProps) => {
         </div>
       ) : (
         <div className="max-small-laptop:p-[3%] small-laptop:grid small-laptop:grid-cols-2 small-laptop:w-full">
-          {restaurantFoods.foods.map((food: Meal) => (
+          {restaurantFoods.foods.map((food: Meal, index) => (
             <>
               <MenuList
+                key={index}
                 name={food.name}
                 price={parseFloat(food.price!).toFixed(2)}
                 poster_image={food.poster_image}

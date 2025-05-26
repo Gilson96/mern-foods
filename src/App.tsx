@@ -7,14 +7,27 @@ import LoginPage from "./components/Login/LoginPage";
 import SignUpPage from "./components/Login/SignUpPage";
 import UserOrders from "./components/UserFeatures/UserOrders";
 import UserFavourites from "./components/UserFeatures/UserFavourites";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { emptyCart } from "./features/cartSlice";
+import { persistor } from "./store";
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  // logout after 1h
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(emptyCart());
+      persistor.purge();
+    }, 1 * 60 * 60 * 1000);
+  });
+
   return (
     <>
       <Router>
         <Routes>
           <Route path="/" element={<LoginPage />} />
-
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/startingPage" element={<StartingPage />} />
           <Route path="/home" element={<Home />} />

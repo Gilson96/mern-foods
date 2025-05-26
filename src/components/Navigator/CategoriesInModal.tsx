@@ -1,13 +1,14 @@
 import { Meal, useGetCategoriesQuery } from "../../features/Recipe";
 import { Divider, Circle } from "@chakra-ui/react";
 import useScreenSize from "../../features/useScreenSize";
+import { memo } from "react";
 
 type CategoryListProps = {
   setActiveCategory: React.Dispatch<React.SetStateAction<string>>;
   onClose: () => void;
 };
 
-const CategoriesInModal = ({
+const CategoriesInModal = memo(({
   setActiveCategory,
   onClose,
 }: CategoryListProps) => {
@@ -45,6 +46,6 @@ const CategoriesInModal = ({
       ))}
     </>
   );
-};
+});
 
 export default CategoriesInModal;
