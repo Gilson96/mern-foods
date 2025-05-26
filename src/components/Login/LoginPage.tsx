@@ -40,7 +40,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col justify-center items-center bg-white gap-2">
+    <div className="h-screen w-screen flex flex-col justify-center items-center bg-black gap-2">
       <div className="flex flex-col items-center">
         <Avatar size="md" bgColor={"black"} />
         <p className="text-2xl">
