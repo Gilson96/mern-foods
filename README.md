@@ -1,7 +1,7 @@
 # 🍔 MERN Foods – Uber Eats Clone (TypeScript + Redux + TailwindCSS)
 
 🚀 **Live Demo**: [https://gilson96.github.io/mern-foods](https://gilson96.github.io/mern-foods)  
-🔌 **Backend API**: [https://react-food-api-03d094431a6b.herokuapp.com](https://react-food-api-03d094431a6b.herokuapp.com)
+🔌 **Backend API**: [https://react-food-api-03d094431a6b.herokuapp.com](https://github.com/Gilson96/react-foods_api)
 
 ---
 
