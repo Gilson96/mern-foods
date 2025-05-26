@@ -43,7 +43,7 @@ const FoodLargeScreen = memo(({
           }}
           src={poster_image}
         />
-        <i className="bg-white h-10 w-10 absolute left-[16.7rem] text-neutral-600 cursor flex justify-center items-center rounded-full top-2 medium-phone:left-[20rem] large-phone:left-[23rem] tablet:left-[44rem] ">
+        <i className="bg-white h-10 w-10 absolute left-[16.7rem] text-neutral-600 cursor flex justify-center items-center rounded-full top-2 medium-phone:left-[20rem] large-phone:left-[24rem] tablet:left-[44rem] ">
           <XMarkIcon className="text-black h-5 w-5" onClick={onClose} />
         </i>
       </div>

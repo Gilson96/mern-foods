@@ -67,10 +67,10 @@ const LoginPage = () => {
             />
           </div>
           <div>
-            <LockClosedIcon className="h-5 w-5 relative top-[32px] left-2 text-neutral-500" />
+            <LockClosedIcon className="h-5 w-5 relative top-[32px] left-2 text-neutral-400" />
             <input
               name="password"
-              type="text"
+              type="password"
               placeholder="Password"
               minLength={6}
               className="h-[2.9rem] w-full rounded focus:outline-none"
